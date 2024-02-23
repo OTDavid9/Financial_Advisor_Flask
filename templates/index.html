@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Financial Advisor | ALAT Crea8 </title>
+    <style>
+        
+body {
+font-family: Arial, sans-serif;
+margin: 0;
+padding: 0;
+background: url(./advisor_image.png);
+/* background-image: url(./advisor_image.png); */
+background-color: #2A2A2A;
+/* background-position: cover; */
+}
+h1{
+margin-top: 100px;
+color: #fff;
+}
+
+.container {
+max-width: 600px;
+margin: 50px auto;
+text-align: center;
+}
+
+#conversation-history {
+text-align: center;
+margin-top: 20px;
+color: #fff;
+padding: 10px;
+margin-bottom: 20px;
+/* max-height: 200px; */
+}
+#query{
+border: 1px solid #A80836;
+padding: 10px;
+height: 50px;
+width: 200px;
+border-radius: 10px;
+}
+
+.input-container {
+display: flex;
+justify-content: space-between;
+/* align-items: center; */
+margin-top: 100px;
+}
+
+input[type="text"] {
+flex: 1;
+padding: 10px;
+}
+
+button {
+padding: 15px 30px;
+background-color: #A80836;
+color: #fff;
+border: none;
+font-size: 20px;
+font-family: Inter;
+cursor: pointer;
+margin-left: 20px;
+border-radius: 10px;
+}
+
+button:hover {
+background-color: #fff;
+color: #A80836;
+}
+
+.user-message {
+text-align: right;
+display: flex;
+align-items: flex-end;
+color: #2A2A2A;
+width: 50%;
+border: 1px solid #fff;
+font-family: Inter;
+background-color: #d8e9ce;
+border-radius: 5px;
+padding: 10px 20px;;
+}
+
+.bot-message {
+text-align: right;
+display: flex;
+align-items: flex-start;
+color: #fff;
+margin-top: 20px;
+border: 1px solid #ffffff;
+font-family: Inter;
+background-color: #A80836;
+margin-bottom: 20px;
+border-radius: 10px;
+padding: 20px 24px;
+font-family: Inter;
+font-size: 16px;
+line-height: 16px;
+}
+
+.loader{
+    font-size: x-large;
+}
+
+.convo-history{
+    height: 500px;
+    overflow-y: scroll;
+
+}
+/* style.css */
+
+/* Hide the default scrollbar */
+::-webkit-scrollbar {
+    width: 10px; /* Width of the scrollbar */
+}
+
+/* Track (background) of the scrollbar */
+::-webkit-scrollbar-track {
+    background: #ffffff; /* White background */
+}
+
+/* Handle (knob) of the scrollbar */
+::-webkit-scrollbar-thumb {
+    background: #A80836; /* Red knob */
+    border-radius: 5px; /* Rounded corners */
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #A80836; /* Darker red on hover */
+}
+
+
+
+    </style>
+   
+   
+</head>
+<body>
+    <!-- <h1>AI Chat Interface</h1>
+    <form id="chat-form">
+        <label for="user-query">Enter your message:</label>
+        <input type="text" id="user-query" name="user-query" required>
+        <button type="submit">Send</button>
+    </form>
+    <div id="response"></div> -->
+
+    <div class="container">
+        <h1>Financial Advisor | ALAT Crea8</h1>
+        
+        
+
+        <div class="convo-history" id="conversation-history">
+
+        </div>
+        <div id="chat-form" class="input-container">
+            <input type="text" id="query" name="user-query" required placeholder="Type a message here...">
+            <button onclick="submitQuery()">Send</button>
+        </div>
+        
+        <!-- <div>
+            <span class="loader">......</span>
+        </div> -->
+    </div>
+
+    <!-- <script>
+        document.getElementById('chat-form').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            const userQuery = formData.get('user-query');
+            
+            const response = await fetch('/ask', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: new URLSearchParams({ user_query: userQuery }),
+            });
+
+            const responseData = await response.json();
+            document.getElementById('response').innerText = responseData.response;
+        });
+    </script> -->
+    <script>
+    async function submitQuery() {
+        const query = document.getElementById('query').value;
+    
+        // Clear input field after submission
+        document.getElementById('query').value = '';
+    
+        // Display user query in conversation history
+        appendMessage('Jack', query, 'user-message');
+    
+        const responseContainer = document.getElementById('conversation-history');
+        responseContainer.scrollTop = responseContainer.scrollHeight;
+    
+        // try {
+            const response = await fetch('/ask', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ query:query })
+            });
+            const responseData = await response.json();
+            const responseText = responseData.response;
+    
+            // Display response in conversation history
+            appendMessage('Advisor', responseText, 'bot-message');
+    
+            responseContainer.scrollTop = responseContainer.scrollHeight;
+        // } catch (error) {
+        //     console.error('Error:', error);
+        //     appendMessage('Advisor', 'An error occurred. Please try again later.', 'bot-message');
+        // }
+    }
+    
+    function appendMessage(sender, message, messageClass) {
+        const conversationHistory = document.getElementById('conversation-history');
+        const messageElement = document.createElement('div');
+        messageElement.classList.add('message');
+        messageElement.classList.add(messageClass);
+        messageElement.innerText = `${sender}: ${message}`;
+        conversationHistory.appendChild(messageElement);
+    }
+</script>
+    
+</body>
+</html>
