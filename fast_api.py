@@ -17,7 +17,7 @@ genai.configure(api_key=GEMINI_API_KEY)
 
 model = genai.GenerativeModel('gemini-pro')
 
-app = FastAPI(__name__)
+app = FastAPI()
 templates = Jinja2Templates(directory="templates")
 
 class QueryRequest(BaseModel):
@@ -48,9 +48,9 @@ async def ask_question(request: Request, query_request: QueryRequest):
 
 
 
-# if __name__ == '__main__':
-#     uvicorn.run(app, host="127.0.0.1", port=8000)
-
-
 if __name__ == '__main__':
-    uvicorn.run(app)
+    uvicorn.run(app, host="127.0.0.1", port=8000)
+
+
+# if __name__ == '__main__':
+#     uvicorn.run(app)
