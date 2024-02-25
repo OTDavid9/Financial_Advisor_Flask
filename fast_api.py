@@ -49,8 +49,5 @@ async def ask_question(request: Request, query_request: QueryRequest):
 
 
 if __name__ == '__main__':
-    uvicorn.run(app, host="127.0.0.1")
+    uvicorn.run(app, host="127.0.0.1", port=8000)
 
-
-# if __name__ == '__main__':
-#     uvicorn.run(app)
