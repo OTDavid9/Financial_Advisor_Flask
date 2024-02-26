@@ -33,7 +33,7 @@ class WebSocketHandler:
     async def send_response(self, response: dict):
         await self.websocket.send_json(response)
 
-@app.websocket("/ws")
+@app.websocket('/ws')
 async def websocket_endpoint(websocket: WebSocket):
     await websocket.accept()
     handler = WebSocketHandler(websocket)
