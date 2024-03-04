@@ -10,3 +10,13 @@ VirtualEnv/
 /VirtualEnv/
 /VirtualEnv
 __pycache__/
+
+
+# Command to start flask app on Render
+gunicorn app:app
+
+# Command to start fastapi app on Render
+uvicorn fast_api:app --host 0.0.0.0 --port 8000
+
+# Command to start websocket app on Render
+uvicorn web_socket:app --host 0.0.0.0 --port 8080
